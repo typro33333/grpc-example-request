@@ -1,0 +1,14 @@
+syntax = "proto3";
+
+message InputNumber {
+    float value = 1;
+}
+
+message OutputNumber {
+    float value = 1;
+}
+
+service Calular {
+    rpc Square(InputNumber) returns (OutputNumber){};
+    rpc Plus (InputNumber) returns (OutputNumber){};
+}

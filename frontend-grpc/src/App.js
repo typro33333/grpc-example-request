@@ -1,18 +1,29 @@
+import React,{useEffect} from 'react';
 import logo from './logo.svg';
 import './App.css';
-import {PetList} from './proto/pets_pb';
+import {Emty} from './proto/pets_pb';
 import {PetServiceClient} from './proto/pets_grpc_web_pb';
-import React,{useEffect} from 'react';
+import {InputNumber} from './proto/calcular_pb';
+import {CalularClient} from './proto/calcular_grpc_web_pb';
+
 function App() {
   useEffect(()=> {
     (async () => {
-      var client = new PetServiceClient('http://localhost:8000');
-      var req = new PetList();
-      const res = await client.PetList(req,{}).catch(console.error);
-      if(!res){
-        res.toObject();
-      }
-      console.log(res)
+      var client = new PetServiceClient('http://localhost:8080');
+      var req = new Emty();
+      const metadata = {'custom-header-1':'value1'}
+      await client.list(req,metadata,(error, pets) => {
+        console.log(pets.array[0])
+    })
+      var client2 = new CalularClient('http://localhost:8080');
+      var req2 = new InputNumber();
+      req2.setValue(3)
+      await client2.square(req2,metadata,(error,result)=>{
+        console.log(result.getValue())
+      })
+      await client2.plus(req2,metadata,(error,result)=>{
+        console.log(result.getValue())
+      })
     })();
   })
   return (
