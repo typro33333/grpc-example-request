@@ -1,2 +1,4 @@
 /node_modules
 package-lock.json
+/frontend-grpc/node_modules
+/frontend-grpc/package-lock

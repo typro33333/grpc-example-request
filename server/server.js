@@ -14,6 +14,10 @@ server.addService(petsProto.PetService.service,{
     }
 })
 
-server.bind('localhost:8888',grpc.ServerCredentials.createInsecure());
-console.log('Server running at http://localhost:8888')
+server.bind('localhost:8082',grpc.ServerCredentials.createInsecure());
+console.log('Server running at http://localhost:8082')
 server.start();
+
+/*protoc -I=./proto/pets.proto --js_out=import_style=commonjs --grpc-web_out=import_style=commonjs,mode=grpcwebtext:$OUT_DIR */
+/* protoc-gen-grpc --js_out=import_style=commonjs,binary:./proto/gen --grpc_out=grpc_js:./proto/gen --proto_path ./proto ./proto/pets.proto */
+/* protoc -I. ./proto/pets.proto --js_out=import_style=commonjs:./proto/gen --grpc-web_out=import_style=commonjs,mode=grpcwebtext:./proto/gen */
